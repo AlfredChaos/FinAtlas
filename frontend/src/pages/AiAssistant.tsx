@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Send, FileText, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import GlassCard from '@/components/GlassCard'
+import GlassButton from '@/components/GlassButton'
 
-// 模拟对话数据
 interface Message {
   id: string
   role: 'user' | 'assistant'
@@ -28,7 +29,6 @@ const mockMessages: Message[] = [
   },
 ]
 
-// 推荐问题
 const suggestedQuestions = [
   '本月消费与上月相比如何？',
   '我的储蓄率是否健康？',
@@ -58,7 +58,6 @@ export default function AiAssistant() {
     setMessages((prev) => [...prev, userMsg])
     setInput('')
 
-    // 模拟 AI 回复
     setTimeout(() => {
       const aiMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -83,15 +82,15 @@ export default function AiAssistant() {
     <div className="space-y-6">
       {/* 页面标题 */}
       <div>
-        <h1 className="text-2xl font-semibold text-slate-800">AI 助手</h1>
-        <p className="mt-1 text-sm text-slate-500">基于你的财务数据进行智能问答</p>
+        <h1 className="text-2xl font-semibold text-white">AI 助手</h1>
+        <p className="mt-1 text-sm text-white/50">基于你的财务数据进行智能问答</p>
       </div>
 
       <div className="flex gap-4" style={{ height: 'calc(100vh - 220px)' }}>
         {/* 左侧：推荐问题 */}
-        <div className="w-56 flex-shrink-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <h3 className="mb-3 flex items-center gap-1.5 text-sm font-medium text-slate-700">
-            <Sparkles className="h-4 w-4 text-emerald-500" />
+        <GlassCard cornerRadius={16} padding="p-4" className="w-56 flex-shrink-0">
+          <h3 className="mb-3 flex items-center gap-1.5 text-sm font-medium text-white/90">
+            <Sparkles className="h-4 w-4 text-emerald-400" />
             推荐问题
           </h3>
           <div className="space-y-2">
@@ -99,16 +98,16 @@ export default function AiAssistant() {
               <button
                 key={i}
                 onClick={() => setInput(q)}
-                className="w-full rounded-lg border border-slate-100 px-3 py-2 text-left text-xs text-slate-600 transition-colors hover:border-emerald-200 hover:bg-emerald-50"
+                className="w-full rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2 text-left text-xs text-white/60 transition-colors hover:border-emerald-500/30 hover:bg-emerald-500/[0.06] hover:text-emerald-400"
               >
                 {q}
               </button>
             ))}
           </div>
-        </div>
+        </GlassCard>
 
         {/* 中部：对话区 */}
-        <div className="flex flex-1 flex-col rounded-lg border border-slate-200 bg-white shadow-sm">
+        <GlassCard cornerRadius={16} padding="p-0" className="flex flex-1 flex-col">
           {/* 消息列表 */}
           <div className="flex-1 space-y-4 overflow-y-auto p-5">
             {messages.map((msg) => (
@@ -121,10 +120,10 @@ export default function AiAssistant() {
               >
                 <div
                   className={cn(
-                    'max-w-[80%] rounded-lg px-4 py-3',
+                    'max-w-[80%] rounded-2xl px-4 py-3',
                     msg.role === 'user'
-                      ? 'bg-emerald-600 text-white'
-                      : 'border border-slate-200 bg-slate-50 text-slate-700',
+                      ? 'bg-emerald-500/20 text-white'
+                      : 'bg-white/[0.06] text-white/80',
                   )}
                 >
                   <p className="text-sm leading-relaxed">{msg.content}</p>
@@ -137,8 +136,8 @@ export default function AiAssistant() {
                           className={cn(
                             'inline-flex cursor-pointer items-center gap-1 rounded-full px-2 py-0.5 text-xs',
                             msg.role === 'user'
-                              ? 'bg-emerald-500 text-emerald-100'
-                              : 'bg-emerald-50 text-emerald-700',
+                              ? 'bg-emerald-500/30 text-emerald-200'
+                              : 'bg-emerald-500/15 text-emerald-400',
                           )}
                         >
                           <FileText className="h-3 w-3" />
@@ -150,7 +149,7 @@ export default function AiAssistant() {
                   <p
                     className={cn(
                       'mt-1 text-xs',
-                      msg.role === 'user' ? 'text-emerald-200' : 'text-slate-400',
+                      msg.role === 'user' ? 'text-white/40' : 'text-white/30',
                     )}
                   >
                     {msg.timestamp}
@@ -161,7 +160,7 @@ export default function AiAssistant() {
           </div>
 
           {/* 输入区 */}
-          <div className="border-t border-slate-200 p-4">
+          <div className="border-t border-white/[0.08] p-4">
             <div className="flex gap-2">
               <textarea
                 value={input}
@@ -169,41 +168,42 @@ export default function AiAssistant() {
                 onKeyDown={handleKeyDown}
                 placeholder="输入你的财务问题..."
                 rows={1}
-                className="flex-1 resize-none rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-emerald-500"
+                className="flex-1 resize-none rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm outline-none focus:border-emerald-400"
               />
-              <button
+              <GlassButton
                 onClick={handleSend}
+                variant="primary"
                 disabled={!input.trim()}
-                className="flex items-center justify-center rounded-lg bg-emerald-600 px-4 text-white transition-colors hover:bg-emerald-700 disabled:opacity-50"
+                className="flex items-center justify-center px-4"
               >
                 <Send className="h-4 w-4" />
-              </button>
+              </GlassButton>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         {/* 右侧：证据引用区 */}
-        <div className="w-60 flex-shrink-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <h3 className="mb-3 text-sm font-medium text-slate-700">证据引用</h3>
+        <GlassCard cornerRadius={16} padding="p-4" className="w-60 flex-shrink-0">
+          <h3 className="mb-3 text-sm font-medium text-white/90">证据引用</h3>
           {selectedEvidence.length > 0 ? (
             <div className="space-y-2">
               {selectedEvidence.map((ev) => (
                 <div
                   key={ev}
-                  className="rounded-lg border border-slate-100 bg-slate-50 p-3"
+                  className="rounded-lg border border-white/[0.06] bg-white/[0.03] p-3"
                 >
                   <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-emerald-500" />
-                    <span className="text-sm font-medium text-slate-700">{ev}</span>
+                    <FileText className="h-4 w-4 text-emerald-400" />
+                    <span className="text-sm font-medium text-white/80">{ev}</span>
                   </div>
-                  <p className="mt-1 text-xs text-slate-400">数据来源文件</p>
+                  <p className="mt-1 text-xs text-white/40">数据来源文件</p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-xs text-slate-400">点击回复中的证据标签查看详情</p>
+            <p className="text-xs text-white/40">点击回复中的证据标签查看详情</p>
           )}
-        </div>
+        </GlassCard>
       </div>
     </div>
   )

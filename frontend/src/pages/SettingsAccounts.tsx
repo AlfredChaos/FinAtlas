@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Plus, CreditCard, Landmark, Wallet } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import GlassCard from '@/components/GlassCard'
+import GlassButton from '@/components/GlassButton'
 
-// 账户图标映射
 const accountIcons: Record<string, React.ElementType> = {
   bank: Landmark,
   credit: CreditCard,
   fund: Wallet,
 }
 
-// 模拟账户数据
 const mockAccounts = [
   {
     id: '1',
@@ -58,14 +58,6 @@ const mockAccounts = [
   },
 ]
 
-const sourceOptions = [
-  { value: 'cmb_debit', label: '招行借记卡', type: 'bank' },
-  { value: 'citic_credit', label: '中信信用卡', type: 'credit' },
-  { value: 'alipay_fund', label: '支付宝基金', type: 'fund' },
-  { value: 'tiantian_fund', label: '天天基金', type: 'fund' },
-  { value: 'qieman', label: '且慢', type: 'fund' },
-]
-
 export default function SettingsAccounts() {
   const [showForm, setShowForm] = useState(false)
 
@@ -74,60 +66,60 @@ export default function SettingsAccounts() {
       {/* 页面标题 */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-800">账户与来源</h1>
-          <p className="mt-1 text-sm text-slate-500">管理你的金融账户和数据来源</p>
+          <h1 className="text-2xl font-semibold text-white">账户与来源</h1>
+          <p className="mt-1 text-sm text-white/50">管理你的金融账户和数据来源</p>
         </div>
-        <button
+        <GlassButton
+          variant="primary"
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="mr-1.5 h-4 w-4" />
           添加账户
-        </button>
+        </GlassButton>
       </div>
 
       {/* 添加账户表单 */}
       {showForm && (
-        <div className="rounded-lg border border-emerald-200 bg-emerald-50/30 p-5">
-          <h2 className="mb-4 font-medium text-slate-700">新增账户</h2>
+        <GlassCard cornerRadius={16} padding="p-5" className="border border-emerald-500/20">
+          <h2 className="mb-4 font-medium text-white/90">新增账户</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="mb-1.5 block text-sm text-slate-600">账户名称</label>
+              <label className="mb-1.5 block text-sm text-white/60">账户名称</label>
               <input
                 type="text"
                 placeholder="例如：招行借记卡"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none focus:border-emerald-500"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm outline-none focus:border-emerald-400"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm text-slate-600">账户类型</label>
-              <select className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none focus:border-emerald-500">
+              <label className="mb-1.5 block text-sm text-white/60">账户类型</label>
+              <select className="w-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm outline-none focus:border-emerald-400">
                 <option value="bank">银行借记卡</option>
                 <option value="credit">信用卡</option>
                 <option value="fund">基金平台</option>
               </select>
             </div>
             <div>
-              <label className="mb-1.5 block text-sm text-slate-600">账号标识</label>
+              <label className="mb-1.5 block text-sm text-white/60">账号标识</label>
               <input
                 type="text"
                 placeholder="例如：尾号6218"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none focus:border-emerald-500"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm outline-none focus:border-emerald-400"
               />
             </div>
           </div>
           <div className="mt-4 flex gap-2">
-            <button className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">
+            <GlassButton variant="primary">
               保存
-            </button>
-            <button
+            </GlassButton>
+            <GlassButton
+              variant="secondary"
               onClick={() => setShowForm(false)}
-              className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
             >
               取消
-            </button>
+            </GlassButton>
           </div>
-        </div>
+        </GlassCard>
       )}
 
       {/* 账户列表 */}
@@ -135,9 +127,11 @@ export default function SettingsAccounts() {
         {mockAccounts.map((account) => {
           const Icon = accountIcons[account.type] || Wallet
           return (
-            <div
+            <GlassCard
               key={account.id}
-              className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+              cornerRadius={16}
+              padding="p-5"
+              className="transition-all hover:bg-white/[0.08]"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
@@ -145,42 +139,42 @@ export default function SettingsAccounts() {
                     className={cn(
                       'flex h-10 w-10 items-center justify-center rounded-lg',
                       account.type === 'bank'
-                        ? 'bg-blue-50 text-blue-600'
+                        ? 'bg-blue-500/15 text-blue-400'
                         : account.type === 'credit'
-                          ? 'bg-amber-50 text-amber-600'
-                          : 'bg-emerald-50 text-emerald-600',
+                          ? 'bg-amber-500/15 text-amber-400'
+                          : 'bg-emerald-500/15 text-emerald-400',
                     )}
                   >
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-slate-700">{account.name}</h3>
-                    <p className="text-xs text-slate-400">{account.number}</p>
+                    <h3 className="font-medium text-white/80">{account.name}</h3>
+                    <p className="text-xs text-white/40">{account.number}</p>
                   </div>
                 </div>
-                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-400">
                   活跃
                 </span>
               </div>
 
               <div className="mt-4 flex items-end justify-between">
                 <div>
-                  <p className="text-xs text-slate-400">当前余额</p>
+                  <p className="text-xs text-white/40">当前余额</p>
                   <p
                     className={cn(
                       'font-mono text-lg font-semibold',
-                      account.balance >= 0 ? 'text-slate-800' : 'text-red-500',
+                      account.balance >= 0 ? 'text-white' : 'text-red-400',
                     )}
                   >
                     {account.balance >= 0 ? '' : '-'}¥ {Math.abs(account.balance).toLocaleString('zh-CN', { minimumFractionDigits: 2 })}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-slate-400">最近导入</p>
-                  <p className="text-sm text-slate-600">{account.lastImport}</p>
+                  <p className="text-xs text-white/40">最近导入</p>
+                  <p className="text-sm text-white/60">{account.lastImport}</p>
                 </div>
               </div>
-            </div>
+            </GlassCard>
           )
         })}
       </div>

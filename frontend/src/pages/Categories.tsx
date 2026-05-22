@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { ChevronRight, ChevronDown, Plus, Edit2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import GlassCard from '@/components/GlassCard'
+import GlassButton from '@/components/GlassButton'
 
-// 模拟分类树数据
 interface Category {
   id: string
   name: string
@@ -76,7 +77,6 @@ const categoryTree: Category[] = [
   },
 ]
 
-// 模拟规则数据
 const mockRules = [
   { id: '1', pattern: '美团*', category: '外卖', priority: 1, hits: 35, active: true },
   { id: '2', pattern: '滴滴*', category: '打车/网约车', priority: 1, hits: 22, active: true },
@@ -103,19 +103,19 @@ export default function Categories() {
       {/* 页面标题 */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-800">分类管理</h1>
-          <p className="mt-1 text-sm text-slate-500">管理消费分类和自动分类规则</p>
+          <h1 className="text-2xl font-semibold text-white">分类管理</h1>
+          <p className="mt-1 text-sm text-white/50">管理消费分类和自动分类规则</p>
         </div>
-        <button className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">
-          <Plus className="h-4 w-4" />
+        <GlassButton variant="primary">
+          <Plus className="mr-1.5 h-4 w-4" />
           添加分类
-        </button>
+        </GlassButton>
       </div>
 
       <div className="flex gap-6">
         {/* 左侧：分类树 */}
-        <div className="w-72 flex-shrink-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <h2 className="mb-3 font-medium text-slate-700">分类体系</h2>
+        <GlassCard cornerRadius={16} padding="p-4" className="w-72 flex-shrink-0">
+          <h2 className="mb-3 font-medium text-white/90">分类体系</h2>
           <div className="space-y-0.5">
             {categoryTree.map((cat) => {
               const expanded = expandedNodes.includes(cat.id)
@@ -124,17 +124,17 @@ export default function Categories() {
                   <button
                     onClick={() => toggleNode(cat.id)}
                     className={cn(
-                      'flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-slate-50',
-                      selectedCategory === cat.id && 'bg-emerald-50 text-emerald-700',
+                      'flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-white/[0.06]',
+                      selectedCategory === cat.id && 'bg-emerald-500/[0.1] text-emerald-400',
                     )}
                   >
                     {expanded ? (
-                      <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+                      <ChevronDown className="h-3.5 w-3.5 text-white/30" />
                     ) : (
-                      <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
+                      <ChevronRight className="h-3.5 w-3.5 text-white/30" />
                     )}
-                    <span className="font-medium text-slate-700">{cat.name}</span>
-                    <span className="ml-auto text-xs text-slate-400">{cat.children?.length}</span>
+                    <span className={cn('font-medium', selectedCategory === cat.id ? 'text-emerald-400' : 'text-white/80')}>{cat.name}</span>
+                    <span className="ml-auto text-xs text-white/30">{cat.children?.length}</span>
                   </button>
                   {expanded && cat.children && (
                     <div className="ml-5 space-y-0.5">
@@ -143,10 +143,10 @@ export default function Categories() {
                           key={child.id}
                           onClick={() => setSelectedCategory(child.id)}
                           className={cn(
-                            'flex w-full items-center rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-slate-50',
+                            'flex w-full items-center rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-white/[0.06]',
                             selectedCategory === child.id
-                              ? 'bg-emerald-50 text-emerald-700'
-                              : 'text-slate-600',
+                              ? 'bg-emerald-500/[0.1] text-emerald-400'
+                              : 'text-white/60',
                           )}
                         >
                           {child.name}
@@ -158,20 +158,20 @@ export default function Categories() {
               )
             })}
           </div>
-        </div>
+        </GlassCard>
 
         {/* 右侧：规则表格 */}
-        <div className="flex-1 rounded-lg border border-slate-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-            <h2 className="font-medium text-slate-700">自动分类规则</h2>
-            <button className="flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700">
-              <Plus className="h-3.5 w-3.5" />
+        <GlassCard cornerRadius={16} padding="p-0" className="flex-1">
+          <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-4">
+            <h2 className="font-medium text-white/90">自动分类规则</h2>
+            <GlassButton variant="primary" className="text-xs">
+              <Plus className="mr-1 h-3.5 w-3.5" />
               添加规则
-            </button>
+            </GlassButton>
           </div>
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-100 text-xs font-medium text-slate-500">
+              <tr className="border-b border-white/[0.06] text-xs font-medium text-white/40">
                 <th className="px-4 py-2.5 text-left">匹配模式</th>
                 <th className="px-4 py-2.5 text-left">分类</th>
                 <th className="px-4 py-2.5 text-center">优先级</th>
@@ -182,29 +182,29 @@ export default function Categories() {
             </thead>
             <tbody>
               {mockRules.map((rule) => (
-                <tr key={rule.id} className="border-b border-slate-100 hover:bg-slate-50">
-                  <td className="px-4 py-2.5 font-mono text-sm text-slate-700">{rule.pattern}</td>
+                <tr key={rule.id} className="border-b border-white/[0.06] hover:bg-white/[0.04]">
+                  <td className="px-4 py-2.5 font-mono text-sm text-white/80">{rule.pattern}</td>
                   <td className="px-4 py-2.5">
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+                    <span className="rounded-full bg-white/[0.06] px-2 py-0.5 text-xs text-white/60">
                       {rule.category}
                     </span>
                   </td>
-                  <td className="px-4 py-2.5 text-center text-sm text-slate-600">{rule.priority}</td>
-                  <td className="px-4 py-2.5 text-center font-mono text-sm text-slate-600">
+                  <td className="px-4 py-2.5 text-center text-sm text-white/60">{rule.priority}</td>
+                  <td className="px-4 py-2.5 text-center font-mono text-sm text-white/60">
                     {rule.hits}
                   </td>
                   <td className="px-4 py-2.5 text-center">
                     <span
                       className={cn(
                         'rounded-full px-2 py-0.5 text-xs font-medium',
-                        rule.active ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-400',
+                        rule.active ? 'bg-emerald-500/15 text-emerald-400' : 'bg-white/[0.06] text-white/40',
                       )}
                     >
                       {rule.active ? '启用' : '停用'}
                     </span>
                   </td>
                   <td className="px-4 py-2.5 text-center">
-                    <button className="text-slate-400 hover:text-slate-600">
+                    <button className="text-white/30 hover:text-white/60">
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                   </td>
@@ -212,7 +212,7 @@ export default function Categories() {
               ))}
             </tbody>
           </table>
-        </div>
+        </GlassCard>
       </div>
     </div>
   )
