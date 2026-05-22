@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 环境文件
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# 测试与覆盖率
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# 日志
+*.log
+
+# Alembic
+backend/alembic/versions/__pycache__/

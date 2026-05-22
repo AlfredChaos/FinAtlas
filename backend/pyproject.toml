@@ -1,0 +1,52 @@
+[project]
+name = "finatlas-backend"
+version = "0.1.0"
+description = "Personal finance management platform backend"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy[asyncio]>=2.0",
+    "alembic",
+    "asyncpg",
+    "pydantic",
+    "pydantic-settings",
+    "python-jose[cryptography]",
+    "passlib[bcrypt]",
+    "python-multipart",
+    "taskiq",
+    "taskiq-aio-pika",
+    "aio-pika",
+    "redis",
+    "boto3",
+    "pandas",
+    "openpyxl",
+    "pdfplumber",
+    "pytesseract",
+    "agno",
+    "httpx",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "httpx",
+    "ruff",
+    "mypy",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
