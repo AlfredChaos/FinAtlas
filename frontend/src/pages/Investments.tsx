@@ -1,6 +1,7 @@
 import { Filter, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import GlassCard from '@/components/GlassCard'
+import Select from '@/components/Select'
 
 type TradeType = 'buy' | 'sell' | 'dividend'
 
@@ -32,24 +33,39 @@ export default function Investments() {
       {/* 筛选栏 */}
       <GlassCard cornerRadius={16} padding="px-4 py-3">
         <div className="flex items-center gap-3">
-          <Filter className="h-4 w-4 text-slate-400" />
-          <select className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600">
-            <option value="">全部月份</option>
-            <option value="2026-05">2026年5月</option>
-            <option value="2026-04">2026年4月</option>
-          </select>
-          <select className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600">
-            <option value="">全部来源</option>
-            <option value="alipay">支付宝基金</option>
-            <option value="tiantian">天天基金</option>
-            <option value="qieman">且慢</option>
-          </select>
-          <select className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600">
-            <option value="">全部类型</option>
-            <option value="buy">买入</option>
-            <option value="sell">卖出</option>
-            <option value="dividend">分红</option>
-          </select>
+          <Filter className="h-4 w-4 text-slate-400 flex-shrink-0" />
+          <Select
+            options={[
+              { value: '', label: '全部月份' },
+              { value: '2026-05', label: '2026年5月' },
+              { value: '2026-04', label: '2026年4月' },
+            ]}
+            value=""
+            onChange={() => {}}
+            className="w-36 flex-shrink-0"
+          />
+          <Select
+            options={[
+              { value: '', label: '全部来源' },
+              { value: 'alipay', label: '支付宝基金' },
+              { value: 'tiantian', label: '天天基金' },
+              { value: 'qieman', label: '且慢' },
+            ]}
+            value=""
+            onChange={() => {}}
+            className="w-36 flex-shrink-0"
+          />
+          <Select
+            options={[
+              { value: '', label: '全部类型' },
+              { value: 'buy', label: '买入' },
+              { value: 'sell', label: '卖出' },
+              { value: 'dividend', label: '分红' },
+            ]}
+            value=""
+            onChange={() => {}}
+            className="w-32 flex-shrink-0"
+          />
           <div className="flex-1" />
           <span className="text-sm text-slate-400">共 {mockInvestments.length} 条</span>
         </div>

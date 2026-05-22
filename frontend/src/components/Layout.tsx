@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Outlet, NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard,
@@ -162,11 +162,7 @@ export default function Layout() {
         {/* 顶部栏 */}
         <header className="flex h-16 flex-shrink-0 items-center justify-between bg-white/70 backdrop-blur-xl border-b border-slate-200/50 px-6">
           {/* 月份选择器 */}
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/60 px-3 py-1.5 text-sm text-slate-600 shadow-sm">
-            <Calendar className="h-4 w-4 text-slate-400" />
-            <span>{currentMonth}</span>
-            <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
-          </div>
+          <MonthSelector />
 
           {/* 全局搜索 */}
           <div className="flex max-w-md flex-1 items-center gap-2 rounded-xl border border-slate-200 bg-white/60 px-3 py-1.5 mx-6 shadow-sm">
@@ -209,6 +205,63 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
+    </div>
+  )
+}
+
+function MonthSelector() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const months = [
+    '2026年5月', '2026年4月', '2026年3月',
+    '2026年2月', '2026年1月', '2025年12月',
+  ]
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white/60 px-3 py-1.5 text-sm text-slate-600 hover:border-emerald-400 hover:bg-white/70 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400/20"
+        style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      >
+        <Calendar className="h-4 w-4 text-slate-400" />
+        <span>{currentMonth}</span>
+        <ChevronDown className={cn('h-3.5 w-3.5 text-slate-400 transition-transform', open && 'rotate-180')} />
+      </button>
+      {open && (
+        <div
+          className="absolute left-0 mt-1 w-40 overflow-hidden rounded-xl border border-slate-200/60 bg-white/90 backdrop-blur-xl py-1"
+          style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.04)' }}
+        >
+          {months.map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setOpen(false)}
+              className={cn(
+                'flex w-full items-center px-3 py-2 text-sm transition-colors',
+                m === currentMonth
+                  ? 'bg-emerald-50 text-emerald-700 font-medium'
+                  : 'text-slate-600 hover:bg-slate-50',
+              )}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

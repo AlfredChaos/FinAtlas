@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Filter, X, FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import GlassCard from '@/components/GlassCard'
+import Select from '@/components/Select'
 
 const mockTransactions = [
   { id: '1', date: '2026-05-20', account: '招行借记卡', category: '餐饮', desc: '美团外卖', amount: -35.00, evidence: '招行_202605.csv#L12' },
@@ -38,29 +39,44 @@ export default function Ledger() {
       {/* 筛选栏 */}
       <GlassCard cornerRadius={16} padding="px-4 py-3">
         <div className="flex items-center gap-3">
-          <Filter className="h-4 w-4 text-slate-400" />
-          <select className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600">
-            <option value="">全部月份</option>
-            <option value="2026-05">2026年5月</option>
-            <option value="2026-04">2026年4月</option>
-          </select>
-          <select className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600">
-            <option value="">全部账户</option>
-            <option value="cmb">招行借记卡</option>
-            <option value="citic">中信信用卡</option>
-          </select>
-          <select className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600">
-            <option value="">全部分类</option>
-            <option value="food">餐饮</option>
-            <option value="transport">交通</option>
-            <option value="shopping">购物</option>
-          </select>
+          <Filter className="h-4 w-4 text-slate-400 flex-shrink-0" />
+          <Select
+            options={[
+              { value: '', label: '全部月份' },
+              { value: '2026-05', label: '2026年5月' },
+              { value: '2026-04', label: '2026年4月' },
+            ]}
+            value=""
+            onChange={() => {}}
+            className="w-36 flex-shrink-0"
+          />
+          <Select
+            options={[
+              { value: '', label: '全部账户' },
+              { value: 'cmb', label: '招行借记卡' },
+              { value: 'citic', label: '中信信用卡' },
+            ]}
+            value=""
+            onChange={() => {}}
+            className="w-36 flex-shrink-0"
+          />
+          <Select
+            options={[
+              { value: '', label: '全部分类' },
+              { value: 'food', label: '餐饮' },
+              { value: 'transport', label: '交通' },
+              { value: 'shopping', label: '购物' },
+            ]}
+            value=""
+            onChange={() => {}}
+            className="w-32 flex-shrink-0"
+          />
           <input
             type="text"
             placeholder="金额区间或关键词"
-            className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-700 outline-none focus:border-emerald-600"
+            className="rounded-xl border border-slate-200/60 bg-white/60 px-2.5 py-2 text-sm text-slate-700 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20"
           />
-          <button className="rounded-md border border-slate-200 px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-50">
+          <button className="rounded-xl border border-slate-200/60 bg-white/60 px-3 py-2 text-sm text-slate-500 hover:bg-white/80 transition-colors">
             重置
           </button>
           <div className="flex-1" />

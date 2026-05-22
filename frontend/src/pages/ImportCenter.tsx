@@ -3,6 +3,7 @@ import { Upload, ChevronDown, ChevronRight, CheckCircle, Clock, AlertCircle } fr
 import { cn } from '@/lib/utils'
 import GlassCard from '@/components/GlassCard'
 import GlassButton from '@/components/GlassButton'
+import Select from '@/components/Select'
 
 const sourceOptions = [
   { value: 'cmb_debit', label: '招行借记卡' },
@@ -83,18 +84,12 @@ export default function ImportCenter() {
             {/* 来源选择 */}
             <div className="mb-4">
               <label className="mb-1.5 block text-sm text-slate-500">数据来源</label>
-              <select
+              <Select
+                options={sourceOptions}
                 value={selectedSource}
-                onChange={(e) => setSelectedSource(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 outline-none focus:border-emerald-600"
-              >
-                <option value="">请选择来源</option>
-                {sourceOptions.map((s) => (
-                  <option key={s.value} value={s.value}>
-                    {s.label}
-                  </option>
-                ))}
-              </select>
+                onChange={setSelectedSource}
+                placeholder="请选择来源"
+              />
             </div>
 
             {/* 账期选择 */}
