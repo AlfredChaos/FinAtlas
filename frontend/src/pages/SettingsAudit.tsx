@@ -80,11 +80,11 @@ const mockAuditLogs = [
 ]
 
 const actionConfig: Record<AuditAction, { label: string; color: string }> = {
-  import: { label: '导入', color: 'bg-blue-500/15 text-blue-400' },
-  parse: { label: '解析', color: 'bg-violet-500/15 text-violet-400' },
-  classify: { label: '分类', color: 'bg-emerald-500/15 text-emerald-400' },
-  update: { label: '修改', color: 'bg-amber-500/15 text-amber-400' },
-  delete: { label: '删除', color: 'bg-red-500/15 text-red-400' },
+  import: { label: '导入', color: 'bg-blue-50 text-blue-600' },
+  parse: { label: '解析', color: 'bg-violet-50 text-violet-600' },
+  classify: { label: '分类', color: 'bg-emerald-50 text-emerald-600' },
+  update: { label: '修改', color: 'bg-amber-50 text-amber-600' },
+  delete: { label: '删除', color: 'bg-red-50 text-red-600' },
 }
 
 const statusIcons: Record<string, React.ElementType> = {
@@ -99,8 +99,8 @@ export default function SettingsAudit() {
     <div className="space-y-6">
       {/* 页面标题 */}
       <div>
-        <h1 className="text-2xl font-semibold text-white">审计日志</h1>
-        <p className="mt-1 text-sm text-white/50">所有数据变更与操作记录，可追溯、可审查</p>
+        <h1 className="text-2xl font-semibold text-slate-900">审计日志</h1>
+        <p className="mt-1 text-sm text-slate-500">所有数据变更与操作记录，可追溯、可审查</p>
       </div>
 
       {/* 时间轴 */}
@@ -114,20 +114,20 @@ export default function SettingsAudit() {
               <div key={log.id} className="relative flex gap-4 pb-6 last:pb-0">
                 {/* 时间轴线 */}
                 {index < mockAuditLogs.length - 1 && (
-                  <div className="absolute left-[19px] top-10 h-full w-px bg-white/[0.08]" />
+                  <div className="absolute left-[19px] top-10 h-full w-px bg-slate-200" />
                 )}
 
                 {/* 节点图标 */}
                 <div
                   className={cn(
-                    'relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-[#1a1a2e] shadow-sm',
+                    'relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-white shadow-sm',
                     log.status === 'success'
-                      ? 'bg-emerald-500/20 text-emerald-400'
+                      ? 'bg-emerald-100 text-emerald-700'
                       : log.status === 'warning'
-                        ? 'bg-amber-500/20 text-amber-400'
+                        ? 'bg-amber-100 text-amber-700'
                         : log.status === 'error'
-                          ? 'bg-red-500/20 text-red-400'
-                          : 'bg-blue-500/20 text-blue-400',
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-blue-100 text-blue-700',
                   )}
                 >
                   <StatusIcon className="h-4 w-4" />
@@ -139,12 +139,12 @@ export default function SettingsAudit() {
                     <span className={cn('rounded-full px-2 py-0.5 text-xs font-medium', actionCfg.color)}>
                       {actionCfg.label}
                     </span>
-                    <span className="text-xs text-white/40">{log.timestamp}</span>
-                    <span className="text-xs text-white/40">· {log.operator}</span>
+                    <span className="text-xs text-slate-400">{log.timestamp}</span>
+                    <span className="text-xs text-slate-400">· {log.operator}</span>
                   </div>
-                  <p className="mt-1 text-sm text-white/80">{log.detail}</p>
+                  <p className="mt-1 text-sm text-slate-700">{log.detail}</p>
                   {log.source && (
-                    <div className="mt-1 flex items-center gap-1 text-xs text-white/40">
+                    <div className="mt-1 flex items-center gap-1 text-xs text-slate-400">
                       <FileText className="h-3 w-3" />
                       {log.source}
                     </div>

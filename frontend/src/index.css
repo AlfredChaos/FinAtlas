@@ -6,7 +6,7 @@
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.90);
+  color: #1e293b;
   font-variant-numeric: tabular-nums;
 
   font-synthesis: none;
@@ -17,18 +17,17 @@
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0f172a 100%);
-  background-attachment: fixed;
+  background: #f1f5f9;
   min-height: 100vh;
 }
 
 *, *::before, *::after {
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: #e2e8f0;
 }
 
 ::selection {
   background: rgba(52, 211, 153, 0.3);
-  color: #fff;
+  color: #0f172a;
 }
 
 ::-webkit-scrollbar {
@@ -41,23 +40,23 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: #cbd5e1;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #94a3b8;
 }
 
 input, select, textarea {
-  color: rgba(255, 255, 255, 0.90);
+  color: #1e293b;
 }
 
 input::placeholder, textarea::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: #94a3b8;
 }
 
 select option {
-  background: #1a1a2e;
-  color: rgba(255, 255, 255, 0.90);
+  background: #ffffff;
+  color: #1e293b;
 }

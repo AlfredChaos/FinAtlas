@@ -1,4 +1,3 @@
-import LiquidGlass from 'liquid-glass-react'
 import { cn } from '@/lib/utils'
 
 interface GlassButtonProps {
@@ -19,29 +18,26 @@ export default function GlassButton({
   type = 'button',
 }: GlassButtonProps) {
   return (
-    <LiquidGlass
-      displacementScale={50}
-      blurAmount={0.05}
-      saturation={130}
-      cornerRadius={100}
-      elasticity={0.2}
-      overLight={false}
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(
+        'px-5 py-2 text-sm font-medium transition-all rounded-full',
+        'backdrop-blur-lg border',
+        variant === 'primary'
+          ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-600 hover:bg-emerald-500/25'
+          : 'bg-white/60 border-slate-200/60 text-slate-600 hover:bg-white/80',
+        disabled && 'opacity-50 cursor-not-allowed',
+        className,
+      )}
+      style={{
+        boxShadow: variant === 'primary'
+          ? '0 2px 8px rgba(16,185,129,0.15)'
+          : '0 2px 8px rgba(0,0,0,0.04)',
+      }}
     >
-      <button
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
-        className={cn(
-          'px-4 py-2 text-sm font-medium transition-all',
-          variant === 'primary'
-            ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30'
-            : 'bg-white/[0.08] text-white/80 hover:bg-white/[0.15]',
-          disabled && 'opacity-50 cursor-not-allowed',
-          className,
-        )}
-      >
-        {children}
-      </button>
-    </LiquidGlass>
+      {children}
+    </button>
   )
 }

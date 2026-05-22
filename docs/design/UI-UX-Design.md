@@ -4,14 +4,14 @@
 - 让用户以最低月度操作成本完成导入、复核、分析和复盘
 - 让每个关键数字、分类结果和 AI 回答都可解释、可回溯
 - 在高信息密度下保持清晰层级和稳定导航
-- 采用 Apple Liquid Glass 设计语言，传达通透、专业、可信的产品气质
+- 采用 Apple Human Interface 风格 + 纯 CSS 玻璃质感，传达通透、专业、可信的产品气质
 
 ## 设计风格选择理由
-- 采用 Apple Human Interface 风格 + Liquid Glass 液态玻璃效果
-- 原因：用户偏好苹果美学和液态玻璃视觉效果
-- 视觉上应传达通透与专业，通过玻璃折射和弹性交互增加高端感
+- 采用 Apple Human Interface 风格 + CSS glassmorphism 效果
+- 原因：用户偏好苹果美学和玻璃视觉效果
+- 视觉上应传达通透与专业，通过毛玻璃模糊和柔和阴影增加精致感
 - 同时保持财务产品应有的可信度与证据驱动特质
-- 实现参考：liquid-glass-react（rdev/liquid-glass-react）
+- 实现方式：backdrop-blur + 半透明白底 + 精细边框 + 柔和阴影（不依赖 liquid-glass-react，该库破坏文档流）
 
 ## 信息架构
 - 一级导航：Dashboard、导入中心、台账、分类管理、月报中心、AI 助手、账户与来源、审计日志
@@ -19,35 +19,36 @@
 - 右侧上下文栏统一承载证据、详情、帮助和 AI 口径说明
 
 ## 页面结构
-- Dashboard：液态玻璃指标卡 + 趋势 + 异常与待办
-- 导入中心：液态玻璃上传区 + 作业列表 + 液态玻璃详情抽屉
-- 台账：液态玻璃筛选栏 + 表格 + 液态玻璃证据抽屉
-- 分类管理：液态玻璃分类树 + 规则表 + 命中统计
-- 月报中心：纵向分区液态玻璃卡片 + 每段下钻入口
-- AI 助手：推荐问题 + 液态玻璃对话区 + 引用面板
+- Dashboard：玻璃质感指标卡 + 趋势 + 异常与待办
+- 导入中心：玻璃上传区 + 作业列表 + 玻璃详情抽屉
+- 台账：玻璃筛选栏 + 表格 + 玻璃证据抽屉
+- 分类管理：玻璃分类树 + 规则表 + 命中统计
+- 月报中心：纵向分区玻璃卡片 + 每段下钻入口
+- AI 助手：推荐问题 + 玻璃对话区 + 引用面板
 
 ## 组件系统
-- LiquidGlassCard —— 液态玻璃卡片容器
-- LiquidGlassPanel —— 侧边栏/抽屉容器
-- LiquidGlassButton —— 液态玻璃按钮
+- GlassCard —— 玻璃卡片容器（backdrop-blur-xl + bg-white/70 + border + shadow）
+- GlassButton —— 玻璃按钮（rounded-full + backdrop-blur-lg + 半透明背景）
 - 指标卡片（GlassCard 包裹）
 - 趋势图卡片
 - 上传面板
 - 导入状态时间线
-- 高密度筛选栏（Glass 包裹）
-- 证据抽屉（Glass 包裹）
+- 高密度筛选栏（GlassCard 包裹）
+- 证据抽屉（GlassCard 包裹）
 - 分类树与规则表
 - 月报分析卡（GlassCard 包裹）
 - AI 回答卡与引用卡（GlassCard 包裹）
 
-## 色彩
-- 背景渐变：深色系 #0a0a1a → #1a1a2e（模拟 macOS 深色桌面）
-- 液态玻璃表面：rgba(255,255,255,0.05)
-- 强调色：翠绿色 emerald-400 (#34d399)
-- 警告：琥珀色 amber-400 (#fbbf24)
-- 错误：红色 red-400 (#f87171)
-- 信息：蓝绿色 cyan-400 (#22d3ee)
-- 文字：白色系 rgba(255,255,255,0.95/0.60/0.40)
+## 色彩（浅色主题）
+- 背景：`#f1f5f9` 浅灰蓝（类似 macOS 浅色桌面）
+- 玻璃表面：`rgba(255,255,255,0.70)` backdrop-blur-xl
+- 强调色：翠绿色 emerald-500 (#10b981)
+- 警告：琥珀色 amber-500 (#f59e0b)
+- 错误：红色 red-500 (#ef4444)
+- 信息：蓝绿色 cyan-500 (#06b6d4)
+- 文字主色：`#1e293b` (slate-800)
+- 文字次级：`#475569` (slate-600)
+- 文字说明：`#94a3b8` (slate-400)
 
 ## 字体
 - 系统字体栈：-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif
@@ -60,36 +61,37 @@
 - 页面区块间距 `24/32`
 
 ## 圆角
-- 液态玻璃卡片：cornerRadius=20
-- 按钮：cornerRadius=100（药丸形）
-- 导航栏：cornerRadius=16
-- 表格容器：cornerRadius=12
+- 玻璃卡片：rounded-2xl (16px)
+- 按钮：rounded-full（药丸形）
+- 导航项：rounded-xl (12px)
+- 表格容器：rounded-2xl (16px)
 
 ## 阴影
-- 液态玻璃效果替代传统阴影
-- 使用玻璃折射和边缘高光创建深度感
-- 抽屉和悬浮层使用更强的 blur 和 displacement
+- 卡片：`0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)`
+- 按钮主：`0 2px 8px rgba(16,185,129,0.15)`
+- 按钮次：`0 2px 8px rgba(0,0,0,0.04)`
+- 下拉菜单：shadow-lg
 
 ## 图标
 - 使用 lucide-react 线性图标
-- 图标颜色使用 text-white/60 或 text-emerald-400
+- 图标颜色 text-slate-400 或 text-emerald-500
 - 图标只辅助识别，不取代文字
 
 ## 表格
 - 高密度、可排序、可筛选、可分页
 - 行操作优先通过悬停或末列按钮暴露
-- 表格容器使用液态玻璃效果包裹
-- 行 hover 使用 rgba(255,255,255,0.05) 微弱高亮
+- 表格容器使用玻璃效果包裹
+- 行 hover 使用 bg-slate-50 微弱高亮
 
 ## 表单
-- 输入框使用半透明背景 rgba(255,255,255,0.08)
-- 聚焦时边框使用 emerald-400
+- 输入框 bg-slate-50 + border-slate-200
+- 聚焦时边框使用 emerald-600
 - 分组清晰，错误定位到字段级别
 - 危险操作独立区域展示
 
 ## 导航
-- 左侧导航使用液态玻璃效果，半透明背景
-- 选中项使用 emerald-400 高亮 + 微弱发光
+- 左侧导航使用半透明白底 + backdrop-blur-xl
+- 选中项使用 emerald-50 背景 + emerald-600 文字
 - 页面内部优先用 Tab、抽屉和局部视图切换
 
 ## 交互状态
@@ -98,7 +100,7 @@
 - AI 状态区分思考中、数据不足、工具失败、回答完成
 
 ## 加载态
-- 使用 skeleton + 液态玻璃半透明效果
+- 使用 skeleton + 玻璃半透明效果
 - 避免整页阻塞
 
 ## 空状态
@@ -124,14 +126,14 @@
 - 状态表达不只依赖颜色
 - 图表要有文字摘要
 - 表单和错误提示需被屏幕阅读器读取
-- 液态玻璃上的文字需保证足够对比度
-- 不支持 displacement 的浏览器使用 fallback 样式
+- 浅色主题下的玻璃卡片文字对比度已确保足够
 
 ## 前端实现注意事项
-- 安装 `liquid-glass-react` 作为核心 UI 依赖
-- 创建 GlassCard / GlassPanel / GlassButton 组件封装 LiquidGlass
+- 使用纯 CSS glassmorphism（backdrop-blur + 半透明白底 + 边框 + 阴影）
+- 不使用 liquid-glass-react（内部 absolute 定位破坏文档流）
+- 创建 GlassCard / GlassButton 组件作为项目标准
 - 关键数字必须具备可点击下钻能力
 - 证据面板尽量复用为统一组件
 - 报表与 AI 的"口径说明卡"必须前置，而非隐藏在次级交互中
-- 深色背景渐变需要在 body 或 root layout 上设置
-- 所有液态玻璃组件在不支持的环境下优雅降级为标准 glassmorphism
+- body 背景使用 `#f1f5f9` 浅色
+- 所有玻璃组件基于 Tailwind 的 backdrop-blur 工具类

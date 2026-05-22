@@ -1,43 +1,31 @@
-import LiquidGlass from 'liquid-glass-react'
 import { cn } from '@/lib/utils'
 
 interface GlassCardProps {
   children: React.ReactNode
   className?: string
   cornerRadius?: number
-  displacementScale?: number
-  blurAmount?: number
-  saturation?: number
   padding?: string
 }
 
 export default function GlassCard({
   children,
   className,
-  cornerRadius = 20,
-  displacementScale = 70,
-  blurAmount = 0.0625,
-  saturation = 130,
+  cornerRadius = 16,
   padding = 'p-5',
 }: GlassCardProps) {
   return (
-    <LiquidGlass
-      displacementScale={displacementScale}
-      blurAmount={blurAmount}
-      saturation={saturation}
-      cornerRadius={cornerRadius}
-      elasticity={0.3}
-      overLight={false}
+    <div
+      className={cn(
+        'bg-white/70 backdrop-blur-xl border border-white/40',
+        padding,
+        className,
+      )}
+      style={{
+        borderRadius: `${cornerRadius}px`,
+        boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
+      }}
     >
-      <div
-        className={cn(
-          'bg-white/[0.05] backdrop-blur-sm',
-          padding,
-          className,
-        )}
-      >
-        {children}
-      </div>
-    </LiquidGlass>
+      {children}
+    </div>
   )
 }
